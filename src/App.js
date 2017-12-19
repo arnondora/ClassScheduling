@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { injectGlobal } from 'styled-components'
+import {isEqual} from 'lodash'
 import fordFulkerson from './utils/fordFulkerson'
 import {getResidualgraph} from './utils/fordFulkerson'
 import {getScheduling} from './utils/fordFulkerson'
@@ -128,6 +129,7 @@ class App extends React.Component {
           handlePreferedTimeOnsubmit={this.handlePreferedTimeOnsubmit.bind(this)}
           currentTimeslot = {this.state.currentTimeSlot}
           currentTeacher = {this.state.currentTeacher}
+          isIgnoreRegulation = {this.state.ignoreRegulation}
         />
 
         <OtherOptions
@@ -171,6 +173,10 @@ class App extends React.Component {
   handlePreferedTimeOnsubmit (e) {
     e.preventDefault()
     var newPreferTimeList = this.state.preferTimeList
+
+    if (isEqual(this.state.currentTimeSlot,"Wednesday Afternoon") && !this.state.ignoreRegulation)
+      alert(this.state.currentTeacher + " does not violate the university's regulation.")
+
     newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
 
     this.setState({
