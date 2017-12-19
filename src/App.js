@@ -6,6 +6,7 @@ import {getScheduling} from './utils/fordFulkerson'
 import firebase from './utils/firebase'
 import TeacherList from './components/TeacherList'
 import TimeAssignList from './components/TimeAssignList'
+import OtherOptions from './components/OtherOptions'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans');
@@ -28,7 +29,6 @@ class App extends React.Component {
     //Remove old Data
     const timeslotRef = firebase.database().ref('timeslots')
     timeslotRef.remove()
-    console.log("Timeslot removed")
 
     const timeOfDaySlot = ['Morning', 'Afternoon']
     const dayOfWeekSlot = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -44,6 +44,11 @@ class App extends React.Component {
     this.state = {
       teachers : [],
       timeslots : timeslots,
+      preferTimeList: [],
+      currentTimeSlot: null,
+      currentTeacher: null,
+      numberOfRoom: 10,
+      ignoreRegulation: false
     }
   }
 
@@ -102,19 +107,39 @@ class App extends React.Component {
   console.log("The maximum possible flow is " +
   	fordFulkerson(graph, 0, 5))
 
+<<<<<<< HEAD
   console.log("Scheduling "+ getScheduling());
   console.log("Residual graph ");
   console.log(getResidualgraph());
 
+=======
+    console.log(this.state.numberOfRoom)
+>>>>>>> 631b1edafc4f39f642412b8233d2a44e47d44d03
     return (
       <Container>
-        <TeacherList handleOnChange={this.handleTeacherChange.bind(this)} handleOnSubmit={this.handleTeacherOnSubmit.bind(this)} fieldVal={this.state.currentTeacherName} teachers={this.state.teachers}/>
-        <TimeAssignList teachers={this.state.teachers} timeslots={this.state.timeslots}/>
+        <TeacherList
+          handleOnChange={this.handleTeacherChange.bind(this)}
+          handleOnSubmit={this.handleTeacherOnSubmit.bind(this)}
+          fieldVal={this.state.currentTeacherName}
+          teachers={this.state.teachers}/>
 
-        <h1>
-          Other Options
-        </h1>
-        <span>Number of room : </span>
+        <TimeAssignList
+          teachers={this.state.teachers}
+          timeslots={this.state.timeslots}
+          prefertimeList = {this.state.preferTimeList}
+          handleTimeSlotChange={this.handleTimeslotTimeChange.bind(this)}
+          handleTeacherChange={this.handleTeacherTimeChange.bind(this)}
+          handlePreferedTimeOnsubmit={this.handlePreferedTimeOnsubmit.bind(this)}
+          currentTimeslot = {this.state.currentTimeSlot}
+          currentTeacher = {this.state.currentTeacher}
+        />
+
+        <OtherOptions
+          numberOfRoom = {this.state.numberOfRoom}
+          isIgnoreRegulation = {this.state.ignoreRegulation}
+          handleChangeRoom= {this.handleChangeRoom.bind(this)}
+          handleChangeRegulation = {this.handleChangeRegulation.bind(this)}
+        />
       </Container>
     );
   }
@@ -132,6 +157,40 @@ class App extends React.Component {
   handleTeacherChange (e) {
     this.setState({
       currentTeacherName: e.target.value
+    })
+  }
+
+  handleTimeslotTimeChange (event,index,value) {
+    this.setState({
+      currentTimeSlot: value
+    })
+  }
+
+  handleTeacherTimeChange (event,index,value) {
+    this.setState({
+      currentTeacher: value
+    })
+  }
+
+  handlePreferedTimeOnsubmit (e) {
+    e.preventDefault()
+    var newPreferTimeList = this.state.preferTimeList
+    newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
+
+    this.setState({
+      preferTimeList: newPreferTimeList
+    })
+  }
+
+  handleChangeRoom (e) {
+    this.setState({
+      numberOfRoom: e.target.value
+    })
+  }
+
+  handleChangeRegulation (e) {
+    this.setState({
+      ignoreRegulation: !this.state.ignoreRegulation
     })
   }
 }
