@@ -49,7 +49,7 @@ const InputContainer = styled.div`
     margin-top: 0;
   }
 `
-export default class SubjectList extends React.Component {
+export default class TeacherList extends React.Component {
   render () {
     return (
       <Container>
@@ -66,7 +66,7 @@ export default class SubjectList extends React.Component {
 
         <TeacherContainer>
           {this.props.teachers !== [] ? this.props.teachers.map((teacher) => {
-            return <TeacherName key={teacher}>{teacher}</TeacherName>
+            return <TeacherName key={teacher.id}>{teacher.name}</TeacherName>
           }) : null}
         </TeacherContainer>
       </Container>

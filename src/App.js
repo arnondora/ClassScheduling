@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, { injectGlobal } from 'styled-components'
 import fordFulkerson from './utils/fordFulkerson'
-
-import SubjectList from './components/SubjectList'
+import firebase from './utils/firebase'
+import TeacherList from './components/TeacherList'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans');
@@ -26,6 +26,26 @@ class App extends React.Component {
       subjects : [],
     }
   }
+
+  componentDidMount () {
+    const teacherRef = firebase.database().ref('teachers')
+
+    teacherRef.on('value', (snapshot) => {
+      let items = snapshot.val()
+      console.log(items)
+      let newList = []
+      for (let item in items) {
+        newList.push({
+          id: item,
+          name: items[item].name
+        })
+      }
+
+      this.setState({
+        teachers: newList
+      })
+    })
+  }
   render() {
       var graph = [
   	[
@@ -44,10 +64,9 @@ class App extends React.Component {
   ]
   console.log("The maximum possible flow is " +
   	fordFulkerson(graph, 0, 5))
-
     return (
       <Container>
-        <SubjectList handleOnChange={this.handleTeacherChange.bind(this)} handleOnSubmit={this.handleTeacherOnSubmit.bind(this)} fieldVal={this.state.currentTeacherName} teachers={this.state.teachers}/>
+        <TeacherList handleOnChange={this.handleTeacherChange.bind(this)} handleOnSubmit={this.handleTeacherOnSubmit.bind(this)} fieldVal={this.state.currentTeacherName} teachers={this.state.teachers}/>
       </Container>
     );
   }
@@ -56,11 +75,8 @@ class App extends React.Component {
     e.preventDefault()
     var newTeacherList = this.state.teachers
     newTeacherList.push(this.state.currentTeacherName)
-
-    this.setState({
-      teachers : newTeacherList,
-      currentTeacherName : ""
-    })
+    const nameRef = firebase.database().ref('teachers')
+    nameRef.push({name : this.state.currentTeacherName})
   }
 
   handleTeacherChange (e) {
