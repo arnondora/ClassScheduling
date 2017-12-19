@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { injectGlobal } from 'styled-components'
 import fordFulkerson from './utils/fordFulkerson'
+import {getResidualgraph} from './utils/fordFulkerson'
+import {getScheduling} from './utils/fordFulkerson'
 import firebase from './utils/firebase'
 import TeacherList from './components/TeacherList'
 import TimeAssignList from './components/TimeAssignList'
@@ -105,7 +107,14 @@ class App extends React.Component {
   console.log("The maximum possible flow is " +
   	fordFulkerson(graph, 0, 5))
 
+<<<<<<< HEAD
+  console.log("Scheduling "+ getScheduling());
+  console.log("Residual graph ");
+  console.log(getResidualgraph());
+
+=======
     console.log(this.state.numberOfRoom)
+>>>>>>> 631b1edafc4f39f642412b8233d2a44e47d44d03
     return (
       <Container>
         <TeacherList
@@ -134,6 +143,8 @@ class App extends React.Component {
       </Container>
     );
   }
+
+
 
   handleTeacherOnSubmit (e) {
     e.preventDefault()
