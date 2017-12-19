@@ -14,6 +14,13 @@ const Header = styled.h1`
   color:#434343;
   margin:0;
 `
+
+const Header2 = styled.h2`
+  color:#434343;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`
+
 const FormContainer = styled.form`
   margin-top: 0;
   display: flex;
@@ -38,6 +45,20 @@ const InputLabel = styled.span`
   margin-right: 5px;
 `
 
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction:column;
+  margin-top:0px;
+`
+
+const ListItem = styled.div`
+  margin-top:10px;
+  margin-bottom: 0;
+
+  :first-child {
+    margin-top: 0
+  }
+`
 export default class TimeAssignList extends React.Component {
   constructor () {
     super()
@@ -95,6 +116,14 @@ export default class TimeAssignList extends React.Component {
               <SubmitButton onClick={this.props.handlePreferedTimeOnsubmit} primary={true}>Add Timeslot</SubmitButton>
             </InputContainer>
           </FormContainer>
+
+          <Header2>Prefered List</Header2>
+          <ListContainer>
+            {this.props.prefertimeList.length != 0 ? this.props.prefertimeList.map((listItem) => {
+              return <ListItem key={listItem.name + " " + listItem.time}>{listItem.name + " on " + listItem.time}</ListItem>
+            }): <p>There's no prefered time.</p>}
+          </ListContainer>
+
       </Container>
     )
   }
