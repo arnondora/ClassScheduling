@@ -7,7 +7,7 @@ import SubjectList from './components/SubjectList'
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-  h1,h2,h3,h4,p,span {
+  html,h1,h2,h3,h4,p,span {
     font-family: 'Open Sans';
   }
 `
