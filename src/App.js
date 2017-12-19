@@ -1,13 +1,11 @@
 import React from 'react'
 import styled, { injectGlobal } from 'styled-components'
 import {isEqual} from 'lodash'
-import fordFulkerson from './utils/fordFulkerson'
-import {getResidualgraph} from './utils/fordFulkerson'
-import {getScheduling} from './utils/fordFulkerson'
 import firebase from './utils/firebase'
 import TeacherList from './components/TeacherList'
 import TimeAssignList from './components/TimeAssignList'
 import OtherOptions from './components/OtherOptions'
+import Scheduling from './components/Scheduling'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans');
@@ -90,28 +88,6 @@ class App extends React.Component {
     })
   }
   render() {
-      var graph = [
-  	[
-  		0, 2, 1, 0, 0, 0
-  	], [
-  		0, 0, 0, 1, 1, 0
-  	], [
-  		0, 0, 0, 0, 1, 0
-  	], [
-  		0, 0, 0, 0, 0, 1
-  	], [
-  		0, 0, 0, 0, 0, 2
-  	], [
-  		0, 0, 0, 0, 0, 0
-  	]
-  ]
-  console.log("The maximum possible flow is " +
-  	fordFulkerson(graph, 0, 5))
-
-  console.log("Scheduling "+ getScheduling());
-  console.log("Residual graph ");
-  console.log(getResidualgraph());
-
     return (
       <Container>
         <TeacherList
@@ -137,6 +113,13 @@ class App extends React.Component {
           isIgnoreRegulation = {this.state.ignoreRegulation}
           handleChangeRoom= {this.handleChangeRoom.bind(this)}
           handleChangeRegulation = {this.handleChangeRegulation.bind(this)}
+        />
+
+        <Scheduling
+          teachers={this.state.teachers}
+          timeslots={this.state.timeslots}
+          prefertimeList = {this.state.preferTimeList}
+          numberOfRoom = {this.state.numberOfRoom}
         />
       </Container>
     );
@@ -176,8 +159,8 @@ class App extends React.Component {
 
     if (isEqual(this.state.currentTimeSlot,"Wednesday Afternoon") && !this.state.ignoreRegulation)
       alert(this.state.currentTeacher + " does not violate the university's regulation.")
-
-    newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
+    else
+      newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
 
     this.setState({
       preferTimeList: newPreferTimeList
