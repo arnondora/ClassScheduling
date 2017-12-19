@@ -69,7 +69,6 @@ export default class TimeAssignList extends React.Component {
   }
 
   render () {
-    console.log(this.props.timeslots)
     return (
       <Container>
           <Header>Prefered Timeslot</Header>
