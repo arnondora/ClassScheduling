@@ -89,7 +89,7 @@ export function fordFulkerson(graph, s, t) {
 			// Find teacher in each timeslot
 			timeSlot.push(timeslot);
 			for(var teacher = 0; teacher < rGraph.length; teacher++)
-				if(rGraph[timeslot][teacher] !== 0 && teacher != rGraph.length-1){
+				if(rGraph[timeslot][teacher] !== 0 && teacher !== rGraph.length-1){
 					timeSlot.push(teacher);
 				}
 
