@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fordFulkerson from './utils/fordFulkerson'
-import logo from './logo.svg';
-import './App.css';
 
-class App extends Component {
+class App extends React.Component {
   render() {
       var graph = [
   	[
@@ -27,7 +25,6 @@ class App extends Component {
 
     return (
       <div className="App">
-
       </div>
     );
   }
