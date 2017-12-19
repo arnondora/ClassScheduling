@@ -1,9 +1,11 @@
 {
-  "name": "algoproject",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ClassScheduling",
+  "version": "1.0.0",
+  "private": false,
+   "homepage": "https://arnondora.github.io/ClassScheduling",
   "dependencies": {
     "firebase": "^4.8.1",
+    "gh-pages": "^1.1.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
@@ -12,6 +14,8 @@
     "styled-components": "^2.3.0"
   },
   "scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
