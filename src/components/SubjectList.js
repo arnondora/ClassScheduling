@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
 
 const Container = styled.div`
   display: flex;
@@ -30,16 +32,17 @@ const InputLabel = styled.span`
   margin-right: 5px;
 `
 
-const InputField = styled.input`
+const InputField = styled(TextField)`
 
 `
 
-const SubmitButton = styled.button`
+const SubmitButton = styled(RaisedButton)`
 
 `
 
 const InputContainer = styled.div`
   display: flex;
+  align-items: baseline;
   margin-top:10px;
 
   :first-child {
@@ -51,19 +54,19 @@ export default class SubjectList extends React.Component {
     return (
       <Container>
         <Header>Teachers</Header>
-        <FormContainer onSubmit={this.props.handleOnSubmit}>
+        <FormContainer>
           <InputContainer>
             <InputLabel>Teacher Name : </InputLabel>
             <InputField value={this.props.fieldVal} onChange={this.props.handleOnChange} name = "teacherName" type="text" placeholder="Teacher Name"/>
           </InputContainer>
           <InputContainer>
-            <SubmitButton>Add</SubmitButton>
+            <SubmitButton onClick={this.props.handleOnSubmit} primary={true}>Add</SubmitButton>
           </InputContainer>
         </FormContainer>
 
         <TeacherContainer>
           {this.props.teachers !== [] ? this.props.teachers.map((teacher) => {
-            return <TeacherName>{teacher}</TeacherName>
+            return <TeacherName key={teacher}>{teacher}</TeacherName>
           }) : null}
         </TeacherContainer>
       </Container>
