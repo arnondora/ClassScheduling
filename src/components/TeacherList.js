@@ -63,7 +63,6 @@ export default class TeacherList extends React.Component {
             <SubmitButton onClick={this.props.handleOnSubmit} primary={true}>Add</SubmitButton>
           </InputContainer>
         </FormContainer>
-
         <TeacherContainer>
           {this.props.teachers !== [] ? this.props.teachers.map((teacher) => {
             return <TeacherName key={teacher.id}>{teacher.name}</TeacherName>
