@@ -1,3 +1,5 @@
+var rGraph;
+var timeSlot;
 function bfs(rGraph, s, t, parent) {
 	var visited = [];
 	var queue = [];
@@ -25,26 +27,14 @@ function bfs(rGraph, s, t, parent) {
 	return (visited[t] === true);
 }
 
-function trackback(rGraph){
-	
-	var result = [];
-	for(var timeslot = 0; timeslot < rGraph.length; timeslot++){
-		// Find timeslot selected
-		if (rGraph[rGraph.length-1][timeslot] != 0){
-			// Find teacher in each timeslot
-			result.push(timeslot);
-			for(var teacher = 0; teacher < rGraph.length; teacher++)
-				if(rGraph[timeslot][teacher] != 0)
-					result.push(teacher);
-			result.push(-1);
-		}
-	}	
-	console.log(result);
-
-	
+export function getResidualgraph(){
+	return rGraph;
+}
+export function getScheduling(){
+	return timeSlot;
 }
 
-module.exports = function fordFulkerson(graph, s, t) {
+export default function fordFulkerson(graph, s, t) {
 	/* Create a residual graph and fill the residual graph
 	 with given capacities in the original graph as
 	 residual capacities in residual graph
@@ -54,15 +44,15 @@ module.exports = function fordFulkerson(graph, s, t) {
 	 is an edge. If rGraph[i][j] is 0, then there is
 	 not)
 	*/
-	console.log('Residual Graph Before');
-	console.log(rGraph);
+	//console.log('Residual Graph Before');
+	//console.log(rGraph);
   	if (s < 0 || t < 0 || s > graph.length-1 || t > graph.length-1){
     	throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid sink or source");
   	}
   	if(graph.length === 0){
     	throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph");
   	}
-	var rGraph = [];
+	rGraph = [];
 	for (var u = 0; u < graph.length; u++) {
 		var temp = [];
     	if(graph[u].length !== graph.length){
@@ -91,12 +81,19 @@ module.exports = function fordFulkerson(graph, s, t) {
 
 		maxFlow += pathFlow;
 	}
-	console.log('Residual Graph After');
-	console.log(rGraph);
-	
-	trackback(rGraph);
-	// Return the overall flow
-
+	// Get Scheduling from residual graph
+	timeSlot = [];
+	for(var timeslot = 0; timeslot < rGraph.length; timeslot++){
+		// Find timeslot selected
+		if (rGraph[rGraph.length-1][timeslot] != 0){
+			// Find teacher in each timeslot
+			timeSlot.push(timeslot);
+			for(var teacher = 0; teacher < rGraph.length; teacher++)
+				if(rGraph[timeslot][teacher] != 0)
+					timeSlot.push(teacher);
+			timeSlot.push(-1);
+		}
+	}		
 	return maxFlow;
 }
 
