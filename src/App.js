@@ -26,7 +26,6 @@ class App extends React.Component {
     //Remove old Data
     const timeslotRef = firebase.database().ref('timeslots')
     timeslotRef.remove()
-    console.log("Timeslot removed")
 
     const timeOfDaySlot = ['Morning', 'Afternoon']
     const dayOfWeekSlot = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -42,6 +41,9 @@ class App extends React.Component {
     this.state = {
       teachers : [],
       timeslots : timeslots,
+      preferTimeList: [],
+      currentTimeSlot: null,
+      currentTeacher: null
     }
   }
 
@@ -99,10 +101,26 @@ class App extends React.Component {
   ]
   console.log("The maximum possible flow is " +
   	fordFulkerson(graph, 0, 5))
+
+    console.log(this.state.preferTimeList)
     return (
       <Container>
-        <TeacherList handleOnChange={this.handleTeacherChange.bind(this)} handleOnSubmit={this.handleTeacherOnSubmit.bind(this)} fieldVal={this.state.currentTeacherName} teachers={this.state.teachers}/>
-        <TimeAssignList teachers={this.state.teachers} timeslots={this.state.timeslots}/>
+        <TeacherList
+          handleOnChange={this.handleTeacherChange.bind(this)}
+          handleOnSubmit={this.handleTeacherOnSubmit.bind(this)}
+          fieldVal={this.state.currentTeacherName}
+          teachers={this.state.teachers}/>
+
+        <TimeAssignList
+          teachers={this.state.teachers}
+          timeslots={this.state.timeslots}
+          prefertimeList = {this.state.preferTimeList}
+          handleTimeSlotChange={this.handleTimeslotTimeChange.bind(this)}
+          handleTeacherChange={this.handleTeacherTimeChange.bind(this)}
+          handlePreferedTimeOnsubmit={this.handlePreferedTimeOnsubmit.bind(this)}
+          currentTimeslot = {this.state.currentTimeSlot}
+          currentTeacher = {this.state.currentTeacher}
+        />
 
         <h1>
           Other Options
@@ -123,6 +141,28 @@ class App extends React.Component {
   handleTeacherChange (e) {
     this.setState({
       currentTeacherName: e.target.value
+    })
+  }
+
+  handleTimeslotTimeChange (event,index,value) {
+    this.setState({
+      currentTimeSlot: value
+    })
+  }
+
+  handleTeacherTimeChange (event,index,value) {
+    this.setState({
+      currentTeacher: value
+    })
+  }
+
+  handlePreferedTimeOnsubmit (e) {
+    e.preventDefault()
+    var newPreferTimeList = this.state.preferTimeList
+    newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
+
+    this.setState({
+      preferTimeList: newPreferTimeList
     })
   }
 }

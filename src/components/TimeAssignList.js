@@ -39,6 +39,14 @@ const InputLabel = styled.span`
 `
 
 export default class TimeAssignList extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      currentTimeSlot: null,
+      currentTeacher: null
+    }
+  }
+
   render () {
     console.log(this.props.timeslots)
     return (
@@ -46,27 +54,45 @@ export default class TimeAssignList extends React.Component {
           <Header>Prefered Timeslot</Header>
           <FormContainer>
             <InputContainer>
+
               <InputLabel>Teacher Name : </InputLabel>
-              <SelectField floatingLabelText="Teacher">
+
+              <SelectField
+                onChange={this.props.handleTeacherChange}
+                value={this.props.currentTeacher}
+                floatingLabelText="Teacher"
+              >
+
                 <MenuItem value={-1} primaryText="Select Teacher List" />
+
                 {this.props.teachers !== [] ? this.props.teachers.map((teacher) => {
-                  return <MenuItem key={teacher.id} value={teacher.id} primaryText={teacher.name}/>
+                  return <MenuItem key={teacher.id} value={teacher.name} primaryText={teacher.name}/>
                 }) : null}
+
               </SelectField>
+
             </InputContainer>
 
             <InputContainer>
+
               <InputLabel>Timeslot : </InputLabel>
-              <SelectField floatingLabelText="Timeslot">
+
+              <SelectField
+                onChange={this.props.handleTimeSlotChange}
+                value={this.props.currentTimeslot}
+                floatingLabelText="Timeslot">
+
                 <MenuItem value={-1} primaryText="Select Timeslot" />
+
                 {this.props.timeslots !== [] ? this.props.timeslots.map((timeslot) => {
-                  return <MenuItem key={timeslot.id} value={timeslot.id} primaryText={timeslot.day + " " + timeslot.time}/>
+                  return <MenuItem key={timeslot.id} value={timeslot.day + " " + timeslot.time} primaryText={timeslot.day + " " + timeslot.time}/>
                 }) : null}
+
               </SelectField>
             </InputContainer>
 
             <InputContainer>
-              <SubmitButton  primary={true}>Add Timeslot</SubmitButton>
+              <SubmitButton onClick={this.props.handlePreferedTimeOnsubmit} primary={true}>Add Timeslot</SubmitButton>
             </InputContainer>
           </FormContainer>
       </Container>
