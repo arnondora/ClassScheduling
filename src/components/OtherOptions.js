@@ -26,11 +26,6 @@ const Description = styled.p`
   margin-bottom: 5px;
 `
 
-const horizontalContainer = styled.div`
-  display: flex;
-  flex-direction:row;
-`
-
 const OptionContainer = styled.div`
   display: flex;
   flex-direction:column;
