@@ -4,6 +4,7 @@ import fordFulkerson from './utils/fordFulkerson'
 import firebase from './utils/firebase'
 import TeacherList from './components/TeacherList'
 import TimeAssignList from './components/TimeAssignList'
+import OtherOptions from './components/OtherOptions'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans');
@@ -43,7 +44,9 @@ class App extends React.Component {
       timeslots : timeslots,
       preferTimeList: [],
       currentTimeSlot: null,
-      currentTeacher: null
+      currentTeacher: null,
+      numberOfRoom: 10,
+      ignoreRegulation: false
     }
   }
 
@@ -102,7 +105,7 @@ class App extends React.Component {
   console.log("The maximum possible flow is " +
   	fordFulkerson(graph, 0, 5))
 
-    console.log(this.state.preferTimeList)
+    console.log(this.state.numberOfRoom)
     return (
       <Container>
         <TeacherList
@@ -122,10 +125,12 @@ class App extends React.Component {
           currentTeacher = {this.state.currentTeacher}
         />
 
-        <h1>
-          Other Options
-        </h1>
-        <span>Number of room : </span>
+        <OtherOptions
+          numberOfRoom = {this.state.numberOfRoom}
+          isIgnoreRegulation = {this.state.ignoreRegulation}
+          handleChangeRoom= {this.handleChangeRoom.bind(this)}
+          handleChangeRegulation = {this.handleChangeRegulation.bind(this)}
+        />
       </Container>
     );
   }
@@ -163,6 +168,18 @@ class App extends React.Component {
 
     this.setState({
       preferTimeList: newPreferTimeList
+    })
+  }
+
+  handleChangeRoom (e) {
+    this.setState({
+      numberOfRoom: e.target.value
+    })
+  }
+
+  handleChangeRegulation (e) {
+    this.setState({
+      ignoreRegulation: !this.state.ignoreRegulation
     })
   }
 }
