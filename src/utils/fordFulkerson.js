@@ -34,7 +34,7 @@ export function getScheduling(){
 	return timeSlot;
 }
 
-export default function fordFulkerson(graph, s, t) {
+export function fordFulkerson(graph, s, t) {
 	/* Create a residual graph and fill the residual graph
 	 with given capacities in the original graph as
 	 residual capacities in residual graph
@@ -89,8 +89,11 @@ export default function fordFulkerson(graph, s, t) {
 			// Find teacher in each timeslot
 			timeSlot.push(timeslot);
 			for(var teacher = 0; teacher < rGraph.length; teacher++)
-				if(rGraph[timeslot][teacher] !== 0)
+				if(rGraph[timeslot][teacher] !== 0 && teacher != rGraph.length-1){
 					timeSlot.push(teacher);
+				}
+
+
 			timeSlot.push(-1);
 		}
 	}
