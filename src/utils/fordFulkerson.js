@@ -58,7 +58,7 @@ export default function fordFulkerson(graph, s, t) {
     	if(graph[u].length !== graph.length){
       		throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph. graph needs to be NxN");
     	}
-		for (v = 0; v < graph.length; v++) {
+		for (let v = 0; v < graph.length; v++) {
 			temp.push(graph[u][v]);
 		}
 		rGraph.push(temp);
@@ -85,15 +85,14 @@ export default function fordFulkerson(graph, s, t) {
 	timeSlot = [];
 	for(var timeslot = 0; timeslot < rGraph.length; timeslot++){
 		// Find timeslot selected
-		if (rGraph[rGraph.length-1][timeslot] != 0){
+		if (rGraph[rGraph.length-1][timeslot] !== 0){
 			// Find teacher in each timeslot
 			timeSlot.push(timeslot);
 			for(var teacher = 0; teacher < rGraph.length; teacher++)
-				if(rGraph[timeslot][teacher] != 0)
+				if(rGraph[timeslot][teacher] !== 0)
 					timeSlot.push(teacher);
 			timeSlot.push(-1);
 		}
-	}		
+	}
 	return maxFlow;
 }
-
