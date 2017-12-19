@@ -25,6 +25,25 @@ function bfs(rGraph, s, t, parent) {
 	return (visited[t] === true);
 }
 
+function trackback(rGraph){
+	
+	var result = [];
+	for(var timeslot = 0; timeslot < rGraph.length; timeslot++){
+		// Find timeslot selected
+		if (rGraph[rGraph.length-1][timeslot] != 0){
+			// Find teacher in each timeslot
+			result.push(timeslot);
+			for(var teacher = 0; teacher < rGraph.length; teacher++)
+				if(rGraph[timeslot][teacher] != 0)
+					result.push(teacher);
+			result.push(-1);
+		}
+	}	
+	console.log(result);
+
+	
+}
+
 module.exports = function fordFulkerson(graph, s, t) {
 	/* Create a residual graph and fill the residual graph
 	 with given capacities in the original graph as
@@ -35,18 +54,20 @@ module.exports = function fordFulkerson(graph, s, t) {
 	 is an edge. If rGraph[i][j] is 0, then there is
 	 not)
 	*/
-  if (s < 0 || t < 0 || s > graph.length-1 || t > graph.length-1){
-    throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid sink or source");
-  }
-  if(graph.length === 0){
-    throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph");
-  }
+	console.log('Residual Graph Before');
+	console.log(rGraph);
+  	if (s < 0 || t < 0 || s > graph.length-1 || t > graph.length-1){
+    	throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid sink or source");
+  	}
+  	if(graph.length === 0){
+    	throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph");
+  	}
 	var rGraph = [];
 	for (var u = 0; u < graph.length; u++) {
 		var temp = [];
-    if(graph[u].length !== graph.length){
-      throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph. graph needs to be NxN");
-    }
+    	if(graph[u].length !== graph.length){
+      		throw new Error("Ford-Fulkerson-Maximum-Flow :: invalid graph. graph needs to be NxN");
+    	}
 		for (v = 0; v < graph.length; v++) {
 			temp.push(graph[u][v]);
 		}
@@ -70,6 +91,12 @@ module.exports = function fordFulkerson(graph, s, t) {
 
 		maxFlow += pathFlow;
 	}
+	console.log('Residual Graph After');
+	console.log(rGraph);
+	
+	trackback(rGraph);
 	// Return the overall flow
+
 	return maxFlow;
 }
+
