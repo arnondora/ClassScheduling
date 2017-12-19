@@ -118,7 +118,7 @@ export default class TimeAssignList extends React.Component {
 
           <Header2>Prefered List</Header2>
           <ListContainer>
-            {this.props.prefertimeList.length != 0 ? this.props.prefertimeList.map((listItem) => {
+            {this.props.prefertimeList.length !== 0 ? this.props.prefertimeList.map((listItem) => {
               return <ListItem key={listItem.name + " " + listItem.time}>{listItem.name + " on " + listItem.time}</ListItem>
             }): <p>There's no prefered time.</p>}
           </ListContainer>
