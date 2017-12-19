@@ -11,10 +11,10 @@ function bfs(rGraph, s, t, parent) {
 	visited[s] = true;
 	parent[s] = -1;
 
-	while (queue.length != 0) {
+	while (queue.length !== 0) {
 		var u = queue.shift();
 		for (var v = 0; v < V; v++) {
-			if (visited[v] == false && rGraph[u][v] > 0) {
+			if (visited[v] === false && rGraph[u][v] > 0) {
 				queue.push(v);
 				parent[v] = u;
 				visited[v] = true;
@@ -22,7 +22,7 @@ function bfs(rGraph, s, t, parent) {
 		}
 	}
 	//If we reached sink in BFS starting from source, then return true, else false
-	return (visited[t] == true);
+	return (visited[t] === true);
 }
 
 function trackback(rGraph){
@@ -78,11 +78,11 @@ module.exports = function fordFulkerson(graph, s, t) {
 
 	while (bfs(rGraph, s, t, parent)) {
 		var pathFlow = Number.MAX_VALUE;
-		for (var v = t; v != s; v = parent[v]) {
+		for (var v = t; v !== s; v = parent[v]) {
 			u = parent[v];
 			pathFlow = Math.min(pathFlow, rGraph[u][v]);
 		}
-		for (v = t; v != s; v = parent[v]) {
+		for (v = t; v !== s; v = parent[v]) {
 			u = parent[v];
 			rGraph[u][v] -= pathFlow;
 			rGraph[v][u] += pathFlow;
