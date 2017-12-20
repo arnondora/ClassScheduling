@@ -1,6 +1,7 @@
 {
   "name": "ClassScheduling",
   "version": "1.0.0",
+  "license" : "MIT",
   "private": false,
    "homepage": "https://arnondora.github.io/ClassScheduling",
   "dependencies": {
