@@ -53,10 +53,10 @@ export default class TeacherList extends React.Component {
   render () {
     return (
       <Container>
-        <Header>Teachers</Header>
+        <Header>Lecturers</Header>
         <FormContainer>
           <InputContainer>
-            <InputLabel>Teacher Name : </InputLabel>
+            <InputLabel>Lecturer Name : </InputLabel>
             <InputField value={this.props.fieldVal} onChange={this.props.handleOnChange} name = "teacherName" type="text" placeholder="Teacher Name"/>
           </InputContainer>
           <InputContainer>

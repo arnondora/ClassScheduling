@@ -158,7 +158,7 @@ class App extends React.Component {
     var newPreferTimeList = this.state.preferTimeList
 
     if (isEqual(this.state.currentTimeSlot,"Wednesday Afternoon") && !this.state.ignoreRegulation)
-      alert(this.state.currentTeacher + " does not violate the university's regulation.")
+      alert(this.state.currentTeacher + " is a nice person. He does not violate the university's regulation.")
     else
       newPreferTimeList.push({name: this.state.currentTeacher, time: this.state.currentTimeSlot})
 
